@@ -29,7 +29,14 @@ namespace Cubitwelve.Src.Extensions
 
         private static void InitEnvironmentVariables()
         {
+            var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+            Console.WriteLine($"Buscando .env en: {envPath}");
+            Console.WriteLine($"¿Existe?: {File.Exists(envPath)}");
+            
             Env.Load();
+            
+            var dbConn = Env.GetString("DB_CONNECTION", "NO_ENCONTRADO");
+            Console.WriteLine($"DB_CONNECTION leído: {dbConn}");
         }
 
         private static void AddServices(IServiceCollection services)
@@ -55,11 +62,11 @@ namespace Cubitwelve.Src.Extensions
             var connectionUrl = Env.GetString("DB_CONNECTION");
 
             services.AddDbContext<DataContext>(opt => {
-                opt.UseSqlServer(connectionUrl, sqlServerOpt => {
-                    sqlServerOpt.EnableRetryOnFailure(
+                opt.UseNpgsql(connectionUrl, npgsqlOpt => {
+                    npgsqlOpt.EnableRetryOnFailure(
                         maxRetryCount: 10,
                         maxRetryDelay: System.TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null
+                        errorCodesToAdd: null
                     );
                 });
             });
