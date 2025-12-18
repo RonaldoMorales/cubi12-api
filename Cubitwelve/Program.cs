@@ -71,6 +71,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Database Bootstrap
-// AppSeedService.SeedDatabase(app);
+AppSeedService.SeedDatabase(app);
 
 app.Run();
