@@ -27,17 +27,22 @@ Follow these steps to get the project up and running on your local machine:
     cd Cubitwelve
     ```
 
-4. Inside the folder Cubitwelve create a file and call it .env then fill with the following example values.
-    ```bash
-    MSSQL_SA_PASSWORD=MyStrongPassword123@
-    JWT_SECRET=secret_only_knewed_by_yourself_and_nobody_else
-    DB_CONNECTION=Server=localhost,5434;Database=master;User Id=sa;Password=MyStrongPassword123@;TrustServerCertificate=true;
-    ```
-    **Note1:** If you decide to change MSSQL_SA_PASSWORD review the [rules](https://hub.docker.com/_/microsoft-mssql-server) assigned to that Environment Variable
+4. Inside the Cubitwelve folder, create a file called `.env` and fill it with the following example values:
+```dotenv
+    # Database
+    DB_CONNECTION=Host=localhost;Port=5432;Database=cubi12db;Username=postgres;Password=YourStrongPassword123;
     
-    **Note2:** If you change MSSQL_SA_PASSWORD you also need to update the DB_CONNECTION to match the Password parameter connection url provided to backend.
+    # JWT Secret
+    JWT_SECRET=your_secure_secret_key_at_least_32_characters_long
     
-    **Note3**: If you change JWT_SECRET review [Padding](https://www.rfc-editor.org/rfc/rfc4868#page-5) of HmacSha256 Algorithm to avoid Runtime exceptions because of short secret.
+    # PostgreSQL (for Docker setup)
+    POSTGRES_PASSWORD=YourStrongPassword123
+```
+  **Note 1:** Choose a strong password for `POSTGRES_PASSWORD` (at least 8 characters with letters, numbers, and symbols).
+    
+    **Note 2:** If you change `POSTGRES_PASSWORD`, also update the `Password` parameter in `DB_CONNECTION`.
+    
+    **Note 3:** The `JWT_SECRET` should be at least 32 characters long to meet HmacSha256 requirements and avoid runtime exceptions.
 
 5. Install project dependencies using dotnet sdk.
    ```bash
@@ -82,4 +87,5 @@ The project uses [xUnit](https://xunit.net/) as testing framework and [FluentAss
 2. Now you are on the root folder, run the tests
     ```bash
     dotnet test
+
     ```
