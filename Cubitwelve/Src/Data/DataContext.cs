@@ -24,5 +24,6 @@ namespace Cubitwelve.Src.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+        
     }
 }
