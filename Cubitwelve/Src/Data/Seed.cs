@@ -77,8 +77,16 @@ namespace Cubitwelve.Src.Data
         /// <param name="options">Options to deserialize json</param>
         private static void SeedSubjects(DataContext context, JsonSerializerOptions options)
         {
+            var forceReseed = Environment.GetEnvironmentVariable("FORCE_RESEED") == "true";
+            
             var result = context.Subjects?.Any();
-            if (result is true or null) return;
+            if (result == true && !forceReseed) return;
+            
+            if (result == true && forceReseed)
+            {
+                context.Subjects.RemoveRange(context.Subjects);
+                context.SaveChanges();
+            }
 
             var path = "Src/Data/DataSeeders/SubjectsData.json";
             var subjectsData = File.ReadAllText(path);
