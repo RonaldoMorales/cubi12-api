@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
                                             "https://cubi12.cl",
                                             "https://www.cubi12.cl",
                                              "https://catedra3.onrender.com",
-                                             "https://cubi12-front-1.onrender.com/"
+                                             "https://cubi12-front-1.onrender.com"
                                             );
                       });
 });
